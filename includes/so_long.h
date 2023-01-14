@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 18:28:03 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:15:35 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ t_mapdata	map(char *file);
 int	nb_exit(char **map, char *file);
 int	nb_player(char **map, char *file);
 int	nb_collectible(char **map, char *file);
+int	valid_char(t_mapdata mapdata);
+int	valid_components(t_mapdata mapdata);
+
 int	map_surrounded_by_walls(t_mapdata mapdata);
 
 #endif

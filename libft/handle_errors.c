@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 21:10:07 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 14:01:39 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:05:59 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,13 @@ void	handle_errors(char *error_msg)
 	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
 	write(STDERR_FILENO, "\n", 1);
 	exit(EXIT_FAILURE);
+}
+
+int		error(char *error_msg)
+{
+	write(STDERR_FILENO, "Error\n", 7);
+	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	write(STDERR_FILENO, "\n", 1);
+	exit(EXIT_FAILURE);
+	return (0);
 }

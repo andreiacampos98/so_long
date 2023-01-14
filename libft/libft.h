@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:16:10 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 12:22:48 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:06:20 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char		*ft_line(char *str);
 char		*ft_str_without_line(char *str);
 char		*get_next_line(int fd);
 void		handle_errors(char *error_msg);
+int			error(char *error_msg);
 
 typedef struct s_list
 {

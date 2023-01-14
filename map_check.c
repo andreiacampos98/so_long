@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:17 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 19:12:10 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:57:31 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int	nb_collectible(char **map, char *file)
 	return (count_collectible);
 }
 
-/*In this function, I will verify if the map is sorrounded by walls*/
 
-int	map_surrounded_by_walls(t_mapdata mapdata)
+/*In this function, I will verify 
+if there are only the following character in the array: P, C, E, 1, 0.*/
+
+int	valid_char(t_mapdata mapdata)
 {
 	int	i;
 	int	j;
@@ -104,13 +106,8 @@ int	map_surrounded_by_walls(t_mapdata mapdata)
 		j = 0;
 		while(mapdata.map[i][j] != '\0')
 		{
-			if (i == 0 && mapdata.map[i][j] != '1')
-				return (0);
-			if (j == 0 && mapdata.map[i][j] != '1')
-				return (0);
-			if (i == (mapdata.size.y - 1) && mapdata.map[i][j] != '1')
-				return (0);
-			if (j == (mapdata.size.x - 1) && mapdata.map[i][j] != '1')
+			if(mapdata.map[i][j] != 'C' && mapdata.map[i][j] != 'P' && mapdata.map[i][j] != 'E' &&
+				mapdata.map[i][j] != '1' && mapdata.map[i][j] != '0')
 				return (0);
 			j++;
 		}
@@ -119,36 +116,33 @@ int	map_surrounded_by_walls(t_mapdata mapdata)
 	return (1);
 }
 
-/*In this function, I will verify if there is a path valid. I will use the flood_fill*/
+/*In this function, I will check if there is only one player and exit. 
+Furthermore, if there is ate least one collectible.*/
 
-void flood_fill(char **map, t_point size, char target, int row, int col)
+int	valid_components(t_mapdata mapdata)
 {
-    if (row < 0 || col < 0 || row >= size.y || col >= size.x)
-        return;
-    if (map[row][col] != target)
-        return;
-    flood_fill(map, size, target, row -1, col);
-    flood_fill(map, size, target, row +1, col);
-    flood_fill(map, size, target, row, col - 1);
-    flood_fill(map, size, target, row, col + 1);
+	if(!valid_char(mapdata))
+		return (0);
+	if(mapdata.player != 1)
+	{
+		handle_errors("There must be one 'P'.");
+		return (0);
+	}
+	if(mapdata.collect == 0)
+	{
+		handle_errors("There must be at least one 'C'.");
+		return (0);
+	}
+	if(mapdata.exit != 1)
+	{
+		handle_errors("There must be one 'E'.");
+		return (0);
+	}
+	return (1);
 }
 
-int	there_is_valid_path(t_mapdata mapdata)
-{
-	flood_fill(mapdata.map, mapdata.size,'0', mapdata.point.y, mapdata.point.x);
-}
-
-/*In this function, I will verify if the map is rectangular*/
-/*
-int	map_is_rectangular(char **map, char *file)
-{
-	int line_count;
-
-	line_count=count_lines_map(file);
-	
-}*/
 /*In order to test the last functions, I use the following main.*/
-
+/*
 int	main()
 {
 	char	**map_0;
@@ -189,5 +183,6 @@ int	main()
 	printf("\nOne player %i\n", nb_player(map_5, file_5));
 	printf("\nWalls %i\n", map_surrounded_by_walls(mapdata));
 	printf("\nWalls %i\n", map_surrounded_by_walls(mapdata_1));
+	there_is_valid_path(mapdata.map, mapdata.size,'0', mapdata.point.y, mapdata.point.x);
 	return (0);
-}
+}*/
