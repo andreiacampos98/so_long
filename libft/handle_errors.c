@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_build_tile.c                                   :+:      :+:    :+:   */
+/*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 21:42:40 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 10:28:41 by anaraujo         ###   ########.fr       */
+/*   Created: 2022/12/07 21:10:07 by anaraujo          #+#    #+#             */
+/*   Updated: 2023/01/14 14:01:39 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx-linux/mlx.h"
-#include "includes/so_long.h"
+#include "libft.h"
 
-/*The function generate the tile filled according to map.
-For each point in the map, I will check the tile's component(1, C, P, E, H, V, F), 
-I will add information to tile about if is a player, collectable or enemy.
-*/
-
+void	handle_errors(char *error_msg)
+{
+	write(STDERR_FILENO, "Error\n", 7);
+	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	write(STDERR_FILENO, "\n", 1);
+	exit(EXIT_FAILURE);
+}
