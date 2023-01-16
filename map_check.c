@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:17 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 21:57:31 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:04:27 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,16 +125,19 @@ int	valid_components(t_mapdata mapdata)
 		return (0);
 	if(mapdata.player != 1)
 	{
+		matrix_delete(mapdata.map);
 		handle_errors("There must be one 'P'.");
 		return (0);
 	}
 	if(mapdata.collect == 0)
 	{
+		matrix_delete(mapdata.map);
 		handle_errors("There must be at least one 'C'.");
 		return (0);
 	}
 	if(mapdata.exit != 1)
 	{
+		matrix_delete(mapdata.map);
 		handle_errors("There must be one 'E'.");
 		return (0);
 	}
@@ -142,8 +145,8 @@ int	valid_components(t_mapdata mapdata)
 }
 
 /*In order to test the last functions, I use the following main.*/
-/*
-int	main()
+
+/*int	main()
 {
 	char	**map_0;
 	char	**map_1;
@@ -158,8 +161,12 @@ int	main()
 	char	*file_4;
 	char	*file_5;
 	char	*file_6;
+	char	*file_7;
+	char	*file_8;
 	t_mapdata	mapdata;
 	t_mapdata	mapdata_1;
+	t_mapdata	mapdata_7;
+	t_mapdata	mapdata_8;
 
 	file = "maps/map_2.ber";
 	file_1 = "maps_invalid/map_invalid_collectible.ber";
@@ -168,6 +175,8 @@ int	main()
 	file_4 = "maps_invalid/map_invalid_player_2.ber";
 	file_5 = "maps_invalid/map_invalid_player.ber";
 	file_6 = "maps_invalid/map_invalid_walls.ber";
+	file_7 = "maps_invalid/map_char.ber";
+	file_8 = "maps_invalid/map_lines.ber";
 	map_0 = read_map(file);
 	map_1 = read_map(file_1);
 	map_2 = read_map(file_2);
@@ -176,6 +185,11 @@ int	main()
 	map_5 = read_map(file_5);
 	mapdata = map(file_6);
 	mapdata_1 = map(file);
+	mapdata_7 = map(file_7);
+	mapdata_8 = map(file_8);
+	printf("\nChar %i\n", valid_char(mapdata_7));
+	printf("\nNb lines equal %i\n", line_length_equal(mapdata_7, file_7));
+	printf("\nNb lines equal %i\n", line_length_equal(mapdata_8, file_8));
 	printf("\nCollectible %i\n", nb_collectible(map_1, file_1));
 	printf("\nOne exit %i\n", nb_exit(map_2, file_2));
 	printf("\nOne exit %i\n", nb_exit(map_3, file_3));
@@ -183,6 +197,5 @@ int	main()
 	printf("\nOne player %i\n", nb_player(map_5, file_5));
 	printf("\nWalls %i\n", map_surrounded_by_walls(mapdata));
 	printf("\nWalls %i\n", map_surrounded_by_walls(mapdata_1));
-	there_is_valid_path(mapdata.map, mapdata.size,'0', mapdata.point.y, mapdata.point.x);
 	return (0);
 }*/

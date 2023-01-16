@@ -6,85 +6,54 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 14:53:09 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:59:28 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minilibx-linux/mlx.h"
 #include "includes/so_long.h"
 
-/*int	main(void)
+/*In this function, I will check all the requirements.*/
+
+int	valid_map(int argc, char *file)
 {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
+	t_mapdata	mapdata;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "so_long");
-	mlx_loop(mlx);
-	img = mlx_new_image(mlx, 1920, 1080);
-}
-
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
-
-int	close(int keycode, t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
-}
-
-int	main(void)
-{
-	t_vars	vars;
-
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
-	mlx_hook(vars.win, 2, 1L<<0, close, &vars);
-	mlx_loop(vars.mlx);
-}*/
-/*
-int	main()
-{
-	int	i;
-	char	**map;
-	char	**map_1;
-	char	**map_2;
-	char	**map_3;
-	char	**map_4;
-	char	**map_5;
-	char	*file;
-	char	*file_1;
-	char	*file_2;
-	char	*file_3;
-	char	*file_4;
-	char	*file_5;
-
-	i = 0;
-	file = "maps/map_2.ber";
-	file_1 = "maps_invalid/map_invalid_collectible.ber";
-	file_2 = "maps_invalid/map_invalid_exit_2.ber";
-	file_3 = "maps_invalid/map_invalid_exit.ber";
-	file_4 = "maps_invalid/map_invalid_player_2.ber";
-	file_5 = "maps_invalid/map_invalid_player.ber";
-	map = read_map(file);
-	map_1 = read_map(file_1);
-	map_2 = read_map(file_2);
-	map_3 = read_map(file_3);
-	map_4 = read_map(file_4);
-	map_5 = read_map(file_5);
-	while (i < 5)
+	if (!valid_file(argc, file))
+		return(0);
+	mapdata = map(file);
+	if (!valid_components(mapdata))
+		return(0);
+	if(!map_surrounded_by_walls(mapdata))
 	{
-		printf("%s", map[i]);
-		i++;
+		matrix_delete(mapdata.map);
+		return (0);
 	}
-	printf("\nCollectible %i\n", at_least_one_collectible(map_1, file_1));
-	printf("\nOne exit %i\n", one_exit(map_2, file_2));
-	printf("\nOne exit %i\n", one_exit(map_3, file_3));
-	printf("\nOne player %i\n", one_player(map_4, file_4));
-	printf("\nOne player %i\n", one_player(map_5, file_5));
+	if(!line_length_equal(mapdata, file))
+	{
+		matrix_delete(mapdata.map);
+		return (0);
+	}
+	if(!has_valid_path(&mapdata))
+		return (0);
+	return (1);
+}
+
+/*In the main, I will call the funtion valid map in order to check if the map is valid. 
+Then, I will call the funtion game_start_map in order to fill the struct game.
+To initiate a loop, we call the mlx_loop function with the mlx instance as only parameter,
+Now for each frame it requires, it will call the function update with the parameter YourStruct. */
+
+int	main(int argc, char **argv)
+{
+	t_game	*game;
+
+	if(!valid_map(argc, argv[1]))
+		return (0);
+	if(!game_start(game, argc, argv[1]))
+		return (0);
+	mlx_hook(game->window, 2, 0, input, (void *)&game);
+	mlx_loop_hook(game->mlx, update, (void *)&game);
+	mlx_loop(game->mlx);
 	return (0);
 }
-*/

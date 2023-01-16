@@ -6,7 +6,7 @@
 #    By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:23:18 by anaraujo          #+#    #+#              #
-#    Updated: 2023/01/14 13:17:29 by anaraujo         ###   ########.fr        #
+#    Updated: 2023/01/16 20:12:14 by anaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,10 @@ LIBFT = ./libft/libft.a
 SRCS := main.c					\
 			map_build_tile.c	\
 			map_check.c			\
+			map_check_2.c		\
 			map_read.c			\
-			map_utils.c
+			map_utils.c			\
+			utils.c				
 
 OBJS := $(SRCS:.c=.o)
 
