@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/16 22:59:28 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:02:39 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	valid_map(int argc, char *file)
 	if (!valid_file(argc, file))
 		return(0);
 	mapdata = map(file);
+	if(!map)
+		return (NULL);
 	if (!valid_components(mapdata))
 		return(0);
 	if(!map_surrounded_by_walls(mapdata))
@@ -50,10 +52,9 @@ int	main(int argc, char **argv)
 
 	if(!valid_map(argc, argv[1]))
 		return (0);
-	if(!game_start(game, argc, argv[1]))
+	if(!game_start(game))
 		return (0);
-	mlx_hook(game->window, 2, 0, input, (void *)&game);
-	mlx_loop_hook(game->mlx, update, (void *)&game);
-	mlx_loop(game->mlx);
 	return (0);
 }
+
+/*mlx_key_hook will call a function whenever we press a Keycode.*/

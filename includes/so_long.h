@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/16 23:31:16 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:02:12 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdbool.h>
+
+# define P "imgs/mario_3.png"
+# define W "imgs/wall_1.png"
+# define E "imgs/mario_3.png"
+# define C "imgs/coin_1.png"
+# define EN "imgs/flower_1.png"
+# define G "imgs/flower_1.png"
 
 typedef struct s_point
 {
@@ -33,45 +40,27 @@ typedef struct s_mapdata
 	int		collect;
 }				t_mapdata;
 
-typedef struct s_tile
-{
-	t_components	type;  //type can be: EMPTY, WALL, COLLECTABLE, EXIT, PLAYER, ENEMY or FOLLOWER.
-	t_components	og_type; //original type, is used to reset the game.
-	t_point			position;  //defines the pixel coordinates of the tile to be drawn in the window
-	struct s_tile	*up;
-	struct s_tile	*down;
-	struct s_tile	*left;
-	struct s_tile	*right;
-}	t_tile;
-
 typedef struct s_game
 {
 	void			*mlx;		// pointer to the mlx
 	void			*window;	// pointer to the window
 	t_point			wndw_size;	// window size
 
-	t_tile			**tilemap;	// 2D tile table
-
-	t_player		player;		// struct with info about the player: current tile, animation frames, counter and images
-
-	int				og_collects;	// original collectable to be able to reset
-	int				collects;	// current value, reducing one each time you pick up one
+	int				og_collect;	// original collectable to be able to reset
+	int				collect;	// current value, reducing one each time you pick up one
 	int				moves;		// moves counter, adding one each time you spend a turn
-
-	t_enemy			*enemy_list;	// list of enemy structs
-	
-	// sprites/images
-	t_point			img_size;
-	t_wall_img		wall_imgs;	// struct with all nine wall images
-	t_collect_img	collects_imgs;	// struct with info about the collectables animation.
-	t_enemy_img		enemy_imgs;	// struct with the animation info of the two type of enemies
-	void			*door_open_img;	// images for the door
-	void			*door_close_img;
-	t_effect		effect;		// struct with the particle effect animation
-	void			*red_panel;	// panels
-	void			*white_panel;
-
+	t_img			img;
 }	t_game;
+
+typedef struct s_img
+{
+	void			*wall;  
+	void			*player;
+	void			*exit;  
+	void			*ground; 
+	void			*coin;
+	t_point			size;  
+}	t_img;
 
 typedef enum e_components
 {
@@ -109,7 +98,7 @@ int		valid_map(int argc, char *file);
 
 /*-------------------- Game Init --------------------*/
 
-int	game_start(t_game *game, int argc, char *argv);
+int	game_start(t_game *game);
 int	update(t_game *game);
 int	input(int key, t_game *game);
 

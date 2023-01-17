@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 21:42:40 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/14 10:28:41 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:04:24 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,4 @@ For each point in the map, I will check the tile's component(1, C, P, E, H, V, F
 I will add information to tile about if is a player, collectable or enemy.
 */
 
+/* Allocates memory to save a tilemap with same size as <map> */
