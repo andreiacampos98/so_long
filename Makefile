@@ -6,7 +6,7 @@
 #    By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:23:18 by anaraujo          #+#    #+#              #
-#    Updated: 2023/01/16 20:12:14 by anaraujo         ###   ########.fr        #
+#    Updated: 2023/01/19 22:46:45 by anaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,10 @@ SRCS := main.c					\
 			map_check.c			\
 			map_check_2.c		\
 			map_read.c			\
-			map_utils.c			\
-			utils.c				
+			utils.c				\
+			game_init.c			\
+			game_handler.c		\
+			game_move.c			
 
 OBJS := $(SRCS:.c=.o)
 
@@ -40,7 +42,7 @@ clean:
 		$(MAKE) clean -C ./libft
 		rm -rf $(OBJS)
 
-fclean:
+fclean: clean
 		$(MAKE) fclean -C ./libft
 		rm -rf $(NAME)
 

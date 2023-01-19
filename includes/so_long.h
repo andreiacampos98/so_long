@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/17 22:02:12 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/19 22:40:55 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define SO_LONG_H
 
 #include "../libft/libft.h"
+#include "../minilibx-linux/mlx.h"
 #include <stdlib.h>
 #include <stdbool.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 
 # define P "imgs/mario_3.png"
 # define W "imgs/wall_1.png"
@@ -23,6 +26,7 @@
 # define C "imgs/coin_1.png"
 # define EN "imgs/flower_1.png"
 # define G "imgs/flower_1.png"
+# define IMG_SIZE 48
 
 typedef struct s_point
 {
@@ -40,6 +44,16 @@ typedef struct s_mapdata
 	int		collect;
 }				t_mapdata;
 
+typedef struct s_img
+{
+	void			*wall;  
+	void			*player;
+	void			*exit;  
+	void			*ground; 
+	void			*coin;
+	t_point			size;  
+}	t_img;
+
 typedef struct s_game
 {
 	void			*mlx;		// pointer to the mlx
@@ -51,16 +65,6 @@ typedef struct s_game
 	int				moves;		// moves counter, adding one each time you spend a turn
 	t_img			img;
 }	t_game;
-
-typedef struct s_img
-{
-	void			*wall;  
-	void			*player;
-	void			*exit;  
-	void			*ground; 
-	void			*coin;
-	t_point			size;  
-}	t_img;
 
 typedef enum e_components
 {
@@ -94,13 +98,18 @@ bool    flood_fill(t_mapdata *map, t_point curr, char **maze);
 bool    has_valid_path(t_mapdata *mapdata);
 int		line_length_equal(t_mapdata mapdata, char *file);
 int		valid_file(int argc, char *file);
-int		valid_map(int argc, char *file);
+int		valid_map(char *file, t_mapdata *mapdata);
 
 /*-------------------- Game Init --------------------*/
 
-int	game_start(t_game *game);
-int	update(t_game *game);
-int	input(int key, t_game *game);
+int		game_start(t_game *game);
+void	init_images(t_game *game);
+void	parse_chars(t_mapdata *mapdata, t_game *game, int width, int i, int j);
+int		render(t_game *game, t_mapdata *mapdata);
+void	loop_images(t_game *game);
+
+int		handle_btnrealease(t_mapdata *mapdata);
+int		handle_keypress(int keysym, t_mapdata *mapdata);
 
 /*-------------------- Utils --------------------*/
 

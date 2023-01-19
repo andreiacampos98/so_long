@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/17 22:02:39 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/19 22:40:00 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,45 @@
 
 /*In this function, I will check all the requirements.*/
 
-int	valid_map(int argc, char *file)
+int	valid_map(char *file, t_mapdata *mapdata)
 {
-	t_mapdata	mapdata;
-
-	if (!valid_file(argc, file))
+	if (!valid_components(*mapdata))
 		return(0);
-	mapdata = map(file);
-	if(!map)
-		return (NULL);
-	if (!valid_components(mapdata))
-		return(0);
-	if(!map_surrounded_by_walls(mapdata))
+	if(!map_surrounded_by_walls(*mapdata))
 	{
-		matrix_delete(mapdata.map);
+		matrix_delete((*mapdata).map);
 		return (0);
 	}
-	if(!line_length_equal(mapdata, file))
+	if(!line_length_equal(*mapdata, file))
 	{
-		matrix_delete(mapdata.map);
+		matrix_delete((*mapdata).map);
 		return (0);
 	}
-	if(!has_valid_path(&mapdata))
+	if(!has_valid_path(mapdata))
 		return (0);
 	return (1);
 }
 
-/*In the main, I will call the funtion valid map in order to check if the map is valid. 
+/*In the main, I will call the funtion I will call the funtion valid map in order to check if the map is valid. 
 Then, I will call the funtion game_start_map in order to fill the struct game.
 To initiate a loop, we call the mlx_loop function with the mlx instance as only parameter,
 Now for each frame it requires, it will call the function update with the parameter YourStruct. */
 
 int	main(int argc, char **argv)
 {
-	t_game	*game;
+	t_game		game;
+	t_mapdata	mapdata;
 
-	if(!valid_map(argc, argv[1]))
+	if (!valid_file(argc, argv[1]))
+		return(0);
+	mapdata = map(argv[1]);
+	if(!valid_map(argv[1], &mapdata))
 		return (0);
-	if(!game_start(game))
+	if(!game_start(&game))
 		return (0);
+	init_images(&game);
+	render(&game, &mapdata);
+	loop_images(&game);
 	return (0);
 }
 
