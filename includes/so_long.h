@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/19 22:40:55 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:23:44 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ typedef struct s_mapdata
 {
 	char	**map;
 	t_point	size;
-	t_point	point;
+	t_point	player_position;
 	int		player;
 	int		exit;
 	int		collect;
+	int		can_exit;
 }				t_mapdata;
 
 typedef struct s_img
@@ -58,9 +59,8 @@ typedef struct s_game
 {
 	void			*mlx;		// pointer to the mlx
 	void			*window;	// pointer to the window
-	t_point			wndw_size;	// window size
 
-	int				og_collect;	// original collectable to be able to reset
+	t_mapdata		map;
 	int				collect;	// current value, reducing one each time you pick up one
 	int				moves;		// moves counter, adding one each time you spend a turn
 	t_img			img;
@@ -102,14 +102,20 @@ int		valid_map(char *file, t_mapdata *mapdata);
 
 /*-------------------- Game Init --------------------*/
 
-int		game_start(t_game *game);
+int		game_start(t_game *game, t_mapdata *mapdata);
 void	init_images(t_game *game);
 void	parse_chars(t_mapdata *mapdata, t_game *game, int width, int i, int j);
 int		render(t_game *game, t_mapdata *mapdata);
 void	loop_images(t_game *game);
 
 int		handle_btnrealease(t_mapdata *mapdata);
-int		handle_keypress(int keysym, t_mapdata *mapdata);
+int		handle_keypress(int keysym, t_game *game);
+
+int		check_next_positions(t_game *game, char move, char character_next_position);
+void	count_collectables_catches(t_game *game, char move);
+int		win_game(t_game *game);
+
+void	move_player(t_game *game, char move);
 
 /*-------------------- Utils --------------------*/
 

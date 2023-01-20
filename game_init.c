@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:52:20 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/19 22:45:57 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:22:53 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 Will return NULL if initialization failed.*/
 /*Creates a new window instance. It will return a window instance pointer. 
 This should be saved for future reference.*/
-int	game_start(t_game *game)
+int	game_start(t_game *game, t_mapdata *mapdata)
 {
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		return (0);
-	game->window = mlx_new_window(game->mlx, game->wndw_size.x, game->wndw_size.y, "so_long");
+	game->window = mlx_new_window(game->mlx, mapdata->size.x, mapdata->size.y, "so_long");
 	if (game->window == NULL)
 	{
 		matrix_delete(game->window);
@@ -73,21 +73,16 @@ int	render(t_game *game, t_mapdata *mapdata)
 /*This function takes the mapdata and put the image in the window*/
 void	parse_chars(t_mapdata *mapdata, t_game *game, int width, int i, int j)
 {
-	if (mapdata->map[i][j] == '1')
-		mlx_put_image_to_window(game->mlx, game->window, game->img.wall,
-			width, i * IMG_SIZE);
-	else if (mapdata->map[i][j] == '0')
-		mlx_put_image_to_window(game->mlx, game->window, game->img.ground,
-			width, i * IMG_SIZE);
-	else if (mapdata->map[i][j] == 'P')
-		mlx_put_image_to_window(game->mlx, game->window, game->img.player,
-			width, i * IMG_SIZE);
-	else if (mapdata->map[i][j] == 'E')
-		mlx_put_image_to_window(game->mlx, game->window, game->img.exit,
-			width, i * IMG_SIZE);
-	else if (mapdata->map[i][j] == 'C')
-		mlx_put_image_to_window(game->mlx, game->window, game->img.coin,
-			width, i * IMG_SIZE);
+	if (mapdata->map[i][j] == WALL)
+		mlx_put_image_to_window(game->mlx, game->window, game->img.wall, width, i * IMG_SIZE);
+	else if (mapdata->map[i][j] == EMPTY)
+		mlx_put_image_to_window(game->mlx, game->window, game->img.ground, width, i * IMG_SIZE);
+	else if (mapdata->map[i][j] == PLAYER)
+		mlx_put_image_to_window(game->mlx, game->window, game->img.player, width, i * IMG_SIZE);
+	else if (mapdata->map[i][j] == EXIT)
+		mlx_put_image_to_window(game->mlx, game->window, game->img.exit, width, i * IMG_SIZE);
+	else if (mapdata->map[i][j] == COLLECTABLE)
+		mlx_put_image_to_window(game->mlx, game->window, game->img.coin, width, i * IMG_SIZE);
 }
 
 /*mlx_loop

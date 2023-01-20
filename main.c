@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/19 22:40:00 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:56:39 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 	mapdata = map(argv[1]);
 	if(!valid_map(argv[1], &mapdata))
 		return (0);
-	if(!game_start(&game))
+	if(!game_start(&game, &mapdata))
 		return (0);
 	init_images(&game);
 	render(&game, &mapdata);
