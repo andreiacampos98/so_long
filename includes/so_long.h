@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 23:23:44 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:14:29 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-# define P "imgs/mario_3.png"
-# define W "imgs/wall_1.png"
-# define E "imgs/mario_3.png"
-# define C "imgs/coin_1.png"
-# define EN "imgs/flower_1.png"
-# define G "imgs/flower_1.png"
 # define IMG_SIZE 48
-
+# define A 97
+# define D 100
+# define S 115
+# define W 119
 typedef struct s_point
 {
 	int	x;
@@ -59,7 +56,7 @@ typedef struct s_game
 {
 	void			*mlx;		// pointer to the mlx
 	void			*window;	// pointer to the window
-
+	t_point			window_size;
 	t_mapdata		map;
 	int				collect;	// current value, reducing one each time you pick up one
 	int				moves;		// moves counter, adding one each time you spend a turn
@@ -102,13 +99,13 @@ int		valid_map(char *file, t_mapdata *mapdata);
 
 /*-------------------- Game Init --------------------*/
 
-int		game_start(t_game *game, t_mapdata *mapdata);
+int		game_start(t_game *game);
 void	init_images(t_game *game);
-void	parse_chars(t_mapdata *mapdata, t_game *game, int width, int i, int j);
-int		render(t_game *game, t_mapdata *mapdata);
+void	parse_chars(t_game *game, int width, int i, int j);
+int		render(t_game *game);
 void	loop_images(t_game *game);
 
-int		handle_btnrealease(t_mapdata *mapdata);
+int		handle_btnrealease(t_game *game);
 int		handle_keypress(int keysym, t_game *game);
 
 int		check_next_positions(t_game *game, char move, char character_next_position);
@@ -116,6 +113,7 @@ void	count_collectables_catches(t_game *game, char move);
 int		win_game(t_game *game);
 
 void	move_player(t_game *game, char move);
+void	destroy_images(t_game *game);
 
 /*-------------------- Utils --------------------*/
 

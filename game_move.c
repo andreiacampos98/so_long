@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 23:18:54 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:42:27 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,14 @@ void	count_collectables_catches(t_game *game, char move)
 all the colectable.*/
 int	win_game(t_game *game)
 {
-	
+	if (game->map.can_exit == 1)
+	{
+		mlx_destroy_window(game->mlx, game->window);
+		game->window = NULL;
+		return (1);
+	}
+	else
+		return (0);
 }
 
 /*This function it will be call everytime that the user click on ASDW.
@@ -53,7 +60,7 @@ void	move_player(t_game *game, char move)
 {
 	if(check_next_positions(game, move, WALL) == 1 || 
 		(check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
-		return 0;
+		return ;
 	game->moves++;
 	count_collectables_catches(game, move);
 	if(game->collect != game->map.collect)
@@ -70,4 +77,14 @@ void	move_player(t_game *game, char move)
 	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.x][game->map.player_position.y] == EXIT)
 		win_game(game);
 	game->map.map[game->map.player_position.x][game->map.player_position.y] = PLAYER;
+}
+
+void	destroy_images(t_game *game)
+{
+	mlx_destroy_image(game->mlx, game->img.wall);
+	mlx_destroy_image(game->mlx, game->img.ground);
+	mlx_destroy_image(game->mlx, game->img.player);
+	mlx_destroy_image(game->mlx, game->img.exit);
+	mlx_destroy_image(game->mlx, game->img.coin);
+	mlx_destroy_display(game->mlx);
 }

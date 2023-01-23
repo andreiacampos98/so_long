@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:29:36 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 20:57:57 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:41:33 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int		handle_keypress(int keysym, t_game *game)
 
 /*This function it will be call everytime that we don't have an event 
 and we need to close the window.*/
-/*int		handle_btnrealease(t_mapdata *mapdata)
+int		handle_btnrealease(t_game *game)
 {
-	
-}*/
+	mlx_destroy_window(game->mlx, game->window);
+	game->window = NULL;
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 18:56:39 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:14:35 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,15 @@ int	main(int argc, char **argv)
 	mapdata = map(argv[1]);
 	if(!valid_map(argv[1], &mapdata))
 		return (0);
-	if(!game_start(&game, &mapdata))
+	if(!game_start(&game))
 		return (0);
 	init_images(&game);
-	render(&game, &mapdata);
+	render(&game);
 	loop_images(&game);
+	destroy_images(&game);
+	free(game.mlx);
+	if(game.map.map)
+		matrix_delete(game.map.map);
 	return (0);
 }
 
