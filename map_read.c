@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 22:41:58 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:56:04 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char	**read_map(char *file)
 	while(i < size.y)
 	{
 		mapdata.map[i] = ft_strtrim(get_next_line(fd), "\n");
+		//printf("%s\n", mapdata.map[i]);
 		i++;
 	}
 	mapdata.map[i] = 0;
@@ -117,8 +118,8 @@ void	init_player(t_mapdata *mapdata)
 		{
 			if (mapdata->map[i][j] == 'P')
 			{
-				mapdata->player_position.x = i;
-				mapdata->player_position.y = j;
+				mapdata->player_position.x = j;
+				mapdata->player_position.y = i;
 			}
 			j++;
 		}

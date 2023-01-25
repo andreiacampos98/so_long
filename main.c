@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/23 22:14:35 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/25 22:07:58 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 /*In this function, I will check all the requirements.*/
 
-int	valid_map(char *file, t_mapdata *mapdata)
+int	valid_map(char *file, t_mapdata mapdata)
 {
-	if (!valid_components(*mapdata))
+	if (!valid_components(mapdata))
 		return(0);
-	if(!map_surrounded_by_walls(*mapdata))
+	if(!map_surrounded_by_walls(mapdata))
 	{
-		matrix_delete((*mapdata).map);
+		matrix_delete((mapdata).map);
 		return (0);
 	}
-	if(!line_length_equal(*mapdata, file))
+	if(!line_length_equal(mapdata, file))
 	{
-		matrix_delete((*mapdata).map);
+		matrix_delete((mapdata).map);
 		return (0);
 	}
-	if(!has_valid_path(mapdata))
+	if(!has_valid_path(&mapdata))
 		return (0);
 	return (1);
 }
@@ -47,14 +47,16 @@ int	main(int argc, char **argv)
 	if (!valid_file(argc, argv[1]))
 		return(0);
 	mapdata = map(argv[1]);
-	if(!valid_map(argv[1], &mapdata))
+	if(!valid_map(argv[1], mapdata))
 		return (0);
+	game.map = mapdata;
 	if(!game_start(&game))
 		return (0);
 	init_images(&game);
 	render(&game);
 	loop_images(&game);
 	destroy_images(&game);
+	mlx_loop(game.mlx);
 	free(game.mlx);
 	if(game.map.map)
 		matrix_delete(game.map.map);

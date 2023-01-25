@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 21:09:31 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/20 22:35:16 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:56:47 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool    has_valid_path(t_mapdata *mapdata)
     int    i;
 
     i = 0;
-    dup = ft_calloc(mapdata->size.y, sizeof(char *));
+    dup = ft_calloc(mapdata->size.y + 1, sizeof(char *));
     if (!dup)
         handle_errors("Failed allocation on has_valid_path()\n");
     while (i < mapdata->size.y)

@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:52:20 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/23 22:19:04 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/25 22:26:51 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	game_start(t_game *game)
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		return (0);
-	game->window = mlx_new_window(game->mlx, game->window_size.x, game->window_size.y, "so_long");
+	game->window = mlx_new_window(game->mlx, 1080, 720, "so_long");
 	game->moves = 0;
 	if (game->window == NULL)
 	{
@@ -35,11 +35,11 @@ int	game_start(t_game *game)
 /*This function initiate the images.*/
 void	init_images(t_game *game)
 {
-	game->img.player = mlx_xpm_file_to_image(game->mlx, "11.xpm", &game->img.size.x, &game->img.size.y);
-	game->img.exit = mlx_xpm_file_to_image(game->mlx,"13.xpm" , &game->img.size.x, &game->img.size.y);
-	game->img.ground = mlx_xpm_file_to_image(game->mlx, "10.xpm", &game->img.size.x, &game->img.size.y);
-	game->img.wall = mlx_xpm_file_to_image(game->mlx, "8.xpm", &game->img.size.x, &game->img.size.y);
-	game->img.coin = mlx_xpm_file_to_image(game->mlx, "12.xpm" , &game->img.size.x, &game->img.size.y);
+	game->img.player = mlx_xpm_file_to_image(game->mlx, "imgs/11.xpm", &(game->img.size.x), &(game->img.size.y));
+	game->img.exit = mlx_xpm_file_to_image(game->mlx,"imgs/13.xpm" , &(game->img.size.x), &(game->img.size.y));
+	game->img.ground = mlx_xpm_file_to_image(game->mlx, "imgs/10.xpm", &(game->img.size.x), &(game->img.size.y));
+	game->img.wall = mlx_xpm_file_to_image(game->mlx, "imgs/8.xpm", &(game->img.size.x), &(game->img.size.y));
+	game->img.coin = mlx_xpm_file_to_image(game->mlx, "imgs/12.xpm" , &(game->img.size.x), &(game->img.size.y));
 }
 
 /*In this funcion, I will take the game and mapdata. 
@@ -56,12 +56,12 @@ int	render(t_game *game)
 	i = 0;
 	j = 0;
 	width = 0;
-	while (game->map.map[i])
+	while (i < game->map.size.y)
 	{
 		while (j < game->map.size.x)
 		{
 			parse_chars(game, width, i, j);
-			width += IMG_SIZE;
+			width += 32;
 			j++;
 		}
 		j = 0;
@@ -74,16 +74,17 @@ int	render(t_game *game)
 /*This function takes the mapdata and put the image in the window*/
 void	parse_chars(t_game *game, int width, int i, int j)
 {
+	(void) width;
 	if (game->map.map[i][j] == WALL)
-		mlx_put_image_to_window(game->mlx, game->window, game->img.wall, width, i * IMG_SIZE);
+		mlx_put_image_to_window(game->mlx, game->window, game->img.wall, j * 32, i * 32);
 	else if (game->map.map[i][j] == EMPTY)
-		mlx_put_image_to_window(game->mlx, game->window, game->img.ground, width, i * IMG_SIZE);
+		mlx_put_image_to_window(game->mlx, game->window, game->img.ground, j * 32, i * 32);
 	else if (game->map.map[i][j] == PLAYER)
-		mlx_put_image_to_window(game->mlx, game->window, game->img.player, width, i * IMG_SIZE);
+		mlx_put_image_to_window(game->mlx, game->window, game->img.player, j * 32, i * 32);
 	else if (game->map.map[i][j] == EXIT)
-		mlx_put_image_to_window(game->mlx, game->window, game->img.exit, width, i * IMG_SIZE);
+		mlx_put_image_to_window(game->mlx, game->window, game->img.exit, j * 32, i * 32);
 	else if (game->map.map[i][j] == COLLECTABLE)
-		mlx_put_image_to_window(game->mlx, game->window, game->img.coin, width, i * IMG_SIZE);
+		mlx_put_image_to_window(game->mlx, game->window, game->img.coin, j * 32, i * 32);
 }
 
 /*mlx_loop
@@ -98,8 +99,21 @@ Hook into the loop.*/
 /*1L<<5 - LeaveWindowMask*/
 void	loop_images(t_game *game)
 {
-	mlx_loop_hook(game->mlx, &render, &game);
+	//mlx_loop_hook(game->mlx, &render, &game);
 	mlx_hook(game->window, KeyPress, KeyPressMask, &handle_keypress, &game);
 	mlx_hook(game->window, ClientMessage, LeaveWindowMask, &handle_btnrealease, &game);
 	mlx_loop(game->mlx);
 }
+
+/*int	main(int argc, char **argv)
+{
+	t_mapdata	mapdata;
+
+	if (!valid_file(argc, argv[1]))
+		return(0);
+	mapdata = map(argv[1]);
+	if(!valid_map(argv[1], mapdata))
+		return (0);
+	if(!has_valid_path(&mapdata))
+		return (0);
+}*/

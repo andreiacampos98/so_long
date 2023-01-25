@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/23 22:14:29 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:33:40 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool    flood_fill(t_mapdata *map, t_point curr, char **maze);
 bool    has_valid_path(t_mapdata *mapdata);
 int		line_length_equal(t_mapdata mapdata, char *file);
 int		valid_file(int argc, char *file);
-int		valid_map(char *file, t_mapdata *mapdata);
+int		valid_map(char *file, t_mapdata mapdata);
 
 /*-------------------- Game Init --------------------*/
 
