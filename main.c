@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/25 22:07:58 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/26 22:20:32 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	main(int argc, char **argv)
 	render(&game);
 	loop_images(&game);
 	destroy_images(&game);
-	mlx_loop(game.mlx);
 	free(game.mlx);
 	if(game.map.map)
 		matrix_delete(game.map.map);

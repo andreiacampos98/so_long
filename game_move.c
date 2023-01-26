@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/23 21:42:27 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/26 22:25:40 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*This function it will check if the next position is a wall*/
 int	check_next_positions(t_game *game, char move, char character_next_position)
 {
-	if((move == 'w' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == character_next_position)
-		|| (move == 's' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == character_next_position)
-		|| (move == 'a' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == character_next_position)
-		|| (move == 'd' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == character_next_position))
+	if((move == 'W' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == character_next_position)
+		|| (move == 'S' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == character_next_position)
+		|| (move == 'A' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == character_next_position)
+		|| (move == 'D' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == character_next_position))
 		return (1);
 	return (0);		
 }
@@ -26,10 +26,10 @@ int	check_next_positions(t_game *game, char move, char character_next_position)
 /*This function it will count the collectables that already catch.*/
 void	count_collectables_catches(t_game *game, char move)
 {
-	if((move == 'w' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == COLLECTABLE)
-		|| (move == 's' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == COLLECTABLE)
-		|| (move == 'a' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == COLLECTABLE)
-		|| (move == 'd' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == COLLECTABLE))
+	if((move == 'W' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == COLLECTABLE)
+		|| (move == 'S' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == COLLECTABLE)
+		|| (move == 'A' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == COLLECTABLE)
+		|| (move == 'D' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == COLLECTABLE))
 		game->collect++;
 }
 
@@ -62,18 +62,31 @@ void	move_player(t_game *game, char move)
 		(check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
 		return ;
 	game->moves++;
+	ft_printf("%d", game->moves); //delete at the end
 	count_collectables_catches(game, move);
-	if(game->collect != game->map.collect)
+	if(game->collect == game->map.collect)
 		game->map.can_exit = 1;
 	game->map.map[game->map.player_position.x][game->map.player_position.y] = WALL;
-	if (move == 'd')
+	if (move == 'D')
+	{
 		game->map.player_position.x++;
-	else if (move == 'a')
+		printf("x: %d   Y: %d", game->map.player_position.x, game->map.player_position.y);
+	}	
+	else if (move == 'A')
+	{
 		game->map.player_position.x--;
-	else if (move == 's')
-		game->map.player_position.y++;
-	else if (move == 'w')
+		
+	}
+	else if (move == 'S')
+	{
 		game->map.player_position.y--;
+		
+	}	
+	else if (move == 'W')
+	{
+		game->map.player_position.y++;
+		
+	}
 	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.x][game->map.player_position.y] == EXIT)
 		win_game(game);
 	game->map.map[game->map.player_position.x][game->map.player_position.y] = PLAYER;

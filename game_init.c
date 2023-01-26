@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:52:20 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/25 22:26:51 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/26 22:29:16 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,7 @@ void	loop_images(t_game *game)
 {
 	//mlx_loop_hook(game->mlx, &render, &game);
 	mlx_hook(game->window, KeyPress, KeyPressMask, &handle_keypress, &game);
+	//mlx_key_hook(game->window, &handle_keypress, &game);
 	mlx_hook(game->window, ClientMessage, LeaveWindowMask, &handle_btnrealease, &game);
 	mlx_loop(game->mlx);
 }
-
-/*int	main(int argc, char **argv)
-{
-	t_mapdata	mapdata;
-
-	if (!valid_file(argc, argv[1]))
-		return(0);
-	mapdata = map(argv[1]);
-	if(!valid_map(argv[1], mapdata))
-		return (0);
-	if(!has_valid_path(&mapdata))
-		return (0);
-}*/
