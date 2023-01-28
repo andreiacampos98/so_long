@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 11:45:33 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:56:35 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	valid_map(char *file, t_mapdata mapdata)
 		return (0);
 	}
 	if(!has_valid_path(&mapdata))
+	{
+		matrix_delete((mapdata).map);
 		return (0);
+	}
 	return (1);
 }
 
@@ -54,7 +57,7 @@ int	main(int argc, char **argv)
 		return (0);
 	init_images(&game);
 	render(&game);
-	loop_images(&game);
+	loop_images(game);
 	destroy_images(&game);
 	if(game.map.map)
 		matrix_delete(game.map.map);

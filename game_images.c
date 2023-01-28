@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:58:58 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 11:55:41 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:55:37 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	render(t_game *game)
 		return (0);
 	i = 0;
 	j = 0;
-	while (i < game->map.size.y)
+	while (game->map.map[i])
 	{
-		while (j < game->map.size.x)
+		while (game->map.map[i][j] && game->map.map[i][j] != '\n')
 		{
 			parse_chars(game, i, j);
 			j++;
@@ -74,12 +74,13 @@ Hook into the loop.*/
 
 /*33 - ClientMessage*/
 /*1L<<5 - LeaveWindowMask*/
-void	loop_images(t_game *game)
+void	loop_images(t_game game)
 {
-	//mlx_loop_hook(game->mlx, &render, &game);
-	mlx_hook(game->window, KeyPress, KeyPressMask, &handle_keypress, &game);
-	mlx_hook(game->window, ClientMessage, LeaveWindowMask, &handle_btnrealease, &game);
-	mlx_loop(game->mlx);
+	mlx_loop_hook(game.mlx, &render, &game);
+	mlx_hook(game.window, KeyPress, KeyPressMask, &handle_keypress, &game);
+	//mlx_hook(game->window, 17, (1L << 0), ft_exit, &game);
+	mlx_hook(game.window, ClientMessage, LeaveWindowMask, &handle_btnrealease, &game);
+	mlx_loop(game.mlx);
 }
 
 void	destroy_images(t_game *game)
@@ -89,8 +90,5 @@ void	destroy_images(t_game *game)
 	mlx_destroy_image(game->mlx, game->img.player);
 	mlx_destroy_image(game->mlx, game->img.exit);
 	mlx_destroy_image(game->mlx, game->img.coin);
-	mlx_destroy_window(game->mlx, game->window);
 	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit(1);
 }

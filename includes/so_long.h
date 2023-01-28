@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 11:27:04 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:56:12 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		init_window(t_game *game);
 void	init_images(t_game *game);
 void	parse_chars(t_game *game, int i, int j);
 int		render(t_game *game);
-void	loop_images(t_game *game);
+void	loop_images(t_game game);
 void	destroy_images(t_game *game);
 
 /*-------------------- Game Handler --------------------*/
@@ -120,6 +120,7 @@ void	move_player(t_game *game, char move);
 
 /*-------------------- Utils --------------------*/
 void	matrix_delete(char **str);
+int		ft_exit(t_game *game);
 
 int	handle_resize(t_game *game);
 

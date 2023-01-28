@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 10:41:49 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:22:21 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ char	**read_map(char *file)
 	i = 0;
 	mapdata.map = allocate_memory_to_map(file);
 	size.y = count_lines_map(file);
-	if (!mapdata.map)
-		return (NULL);
+	/*if (!mapdata.map)
+		return (NULL);*/
 	fd = open(file, O_RDONLY);
 	while(i < size.y)
 	{

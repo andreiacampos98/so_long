@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 11:12:16 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:00:57 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,59 +58,24 @@ we will change the value of can_exit for 1.*/
 /*Then we will put the player in that position.*/
 void	move_player(t_game *game, char move)
 {
-	int j = 0;
 	if(check_next_positions(game, move, WALL) == 1 || 
 		(check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
 		return ;
 	game->moves++;
-	ft_printf("Moves: %d\n", game->moves); //delete at the end
+	ft_printf("Moves: %d\n", game->moves);
 	count_collectables_catches(game, move);
-	ft_printf("Count coins catches: %d\n", game->collect); //delete at the end
-	ft_printf("Count coins: %d\n", game->map.collect); //delete at the end
 	if(game->collect == game->map.collect)
 		game->map.can_exit = 1;
-	ft_printf("x: %d   Y: %d\n", game->map.player_position.x, game->map.player_position.y);
-	ft_printf("Character: %c\n", game->map.map[game->map.player_position.y][game->map.player_position.x]);
-	while(j < game->map.size.y)
-	{
-		ft_printf("%s\n", game->map.map[j]);
-		j++;
-	}
 	game->map.map[game->map.player_position.y][game->map.player_position.x] = EMPTY;
-	ft_printf("Character: %c\n", game->map.map[game->map.player_position.y][game->map.player_position.x]);
 	if (move == 'd')
-	{
 		game->map.player_position.x++;
-		printf("x: %d   Y: %d\n", game->map.player_position.y, game->map.player_position.x);
-	}	
 	else if (move == 'a')
-	{
 		game->map.player_position.x--;
-		
-	}
 	else if (move == 's')
-	{
 		game->map.player_position.y++;
-		
-	}	
 	else if (move == 'w')
-	{
 		game->map.player_position.y--;
-		
-	}
 	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.y][game->map.player_position.x] == EXIT)
 		win_game(game);
 	game->map.map[game->map.player_position.y][game->map.player_position.x] = PLAYER;
-	j = 0;
-	while(j < game->map.size.y)
-	{
-		ft_printf("%s\n", game->map.map[j]);
-		j++;
-	}
 }
-
-/*int	handle_resize(t_game *game)
-{
-	render(game);
-	return (0);
-}*/

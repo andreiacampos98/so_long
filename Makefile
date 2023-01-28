@@ -6,7 +6,7 @@
 #    By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:23:18 by anaraujo          #+#    #+#              #
-#    Updated: 2023/01/28 11:02:11 by anaraujo         ###   ########.fr        #
+#    Updated: 2023/01/28 12:15:59 by anaraujo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MLXFLAGS := -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11
 
 LIBFT := ./libft/libft.a
 
-SRCS := main.c				map_build_tile.c	\
+SRCS := main.c				\
 			map_check.c		map_check_2.c		\
 			map_read.c		utils.c				\
 			game_init.c		game_handler.c		\

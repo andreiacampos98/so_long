@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 21:09:31 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/25 21:56:47 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:36:41 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool    flood_fill(t_mapdata *map, t_point curr, char **maze)
     static bool         found_exit = false;
     
     if (maze[curr.y][curr.x] == WALL)
-        return (false);
+		return (false);
     else if (maze[curr.y][curr.x] == COLLECTABLE)
         collect++;
     else if (maze[curr.y][curr.x] == EXIT)
