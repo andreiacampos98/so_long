@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 14:00:57 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:17:34 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,36 @@
 /*This function it will check if the next position is a wall*/
 int	check_next_positions(t_game *game, char move, char character_next_position)
 {
-	if((move == 'w' && game->map.map[game->map.player_position.y - 1][game->map.player_position.x] == character_next_position)
-		|| (move == 's' && game->map.map[game->map.player_position.y + 1][game->map.player_position.x] == character_next_position)
-		|| (move == 'a' && game->map.map[game->map.player_position.y][game->map.player_position.x - 1] == character_next_position)
-		|| (move == 'd' && game->map.map[game->map.player_position.y][game->map.player_position.x+ 1] == character_next_position))
+	int	y;
+	int	x;
+
+	y = game->map.player_position.y;
+	x = game->map.player_position.x;
+	if ((move == 'w' && game->map.map[y - 1][x] == character_next_position)
+		|| (move == 's' && game->map.map[y + 1][x] == character_next_position)
+		|| (move == 'a' && game->map.map[y][x - 1] == character_next_position)
+		|| (move == 'd' && game->map.map[y][x + 1] == character_next_position))
 		return (1);
-	return (0);		
+	return (0);
 }
 
 /*This function it will count the collectables that already catch.*/
 void	count_collectables_catches(t_game *game, char move)
 {
-	if((move == 'w' && game->map.map[game->map.player_position.y - 1][game->map.player_position.x] == COLLECTABLE)
-		|| (move == 's' && game->map.map[game->map.player_position.y + 1][game->map.player_position.x] == COLLECTABLE)
-		|| (move == 'a' && game->map.map[game->map.player_position.y][game->map.player_position.x - 1] == COLLECTABLE)
-		|| (move == 'd' && game->map.map[game->map.player_position.y][game->map.player_position.x+ 1] == COLLECTABLE))
+	int	y;
+	int	x;
+
+	y = game->map.player_position.y;
+	x = game->map.player_position.x;
+	if ((move == 'w' && game->map.map[y - 1][x] == COLLECTABLE)
+		|| (move == 's' && game->map.map[y + 1][x] == COLLECTABLE)
+		|| (move == 'a' && game->map.map[y][x - 1] == COLLECTABLE)
+		|| (move == 'd' && game->map.map[y][x + 1] == COLLECTABLE))
 		game->collect++;
 }
 
-/*This funtion it will quit the game when the player found the exit and have collect
-all the colectable.*/
+/*This funtion it will quit the game when the player found the exit 
+and have collect all the colectable.*/
 int	win_game(t_game *game)
 {
 	if (game->map.can_exit == 1)
@@ -50,21 +60,24 @@ int	win_game(t_game *game)
 /*This function it will be call everytime that the user click on ASDW.
 If the next position is a wall or the next position is an exit and 
 there is collectible, the function return 0.*/
-/*The number of steps should increase. I will call the function count_ollectables_catches.*/
-/*If the number of collectables is equal to the original number for collectables,
-we will change the value of can_exit for 1.*/
+/*The number of steps should increase. I will call the function 
+count_ollectables_catches.*/
+/*If the number of collectables is equal to the original number 
+for collectables,we will change the value of can_exit for 1.*/
 /*For each move, we will change the position*/
-/*If can_exit = 1 and the position that we are is exit, we will call the funtion win_game.*/
+/*If can_exit = 1 and the position that we are is exit, we will call the 
+funtion win_game.*/
 /*Then we will put the player in that position.*/
 void	move_player(t_game *game, char move)
 {
-	if(check_next_positions(game, move, WALL) == 1 || 
-		(check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
+	if (check_next_positions(game, move, WALL) == 1
+		|| (check_next_positions(game, move, EXIT) == 1
+			&& game->map.can_exit == 0))
 		return ;
 	game->moves++;
 	ft_printf("Moves: %d\n", game->moves);
 	count_collectables_catches(game, move);
-	if(game->collect == game->map.collect)
+	if (game->collect == game->map.collect)
 		game->map.can_exit = 1;
 	game->map.map[game->map.player_position.y][game->map.player_position.x] = EMPTY;
 	if (move == 'd')

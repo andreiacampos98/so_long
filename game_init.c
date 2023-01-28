@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:52:20 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 11:03:15 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:06:15 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_game	game_init(t_mapdata *map)
 	game.moves = 0;
 	game.collect = 0;
 	game.map = (*map);
-	game.window_size.x= map->size.x * IMG_SIZE;
-	game.window_size.y= map->size.y * IMG_SIZE;
+	game.window_size.x = map->size.x * IMG_SIZE;
+	game.window_size.y = map->size.y * IMG_SIZE;
 	return (game);
 }
 
@@ -34,7 +34,8 @@ int	init_window(t_game *game)
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 		return (0);
-	game->window = mlx_new_window(game->mlx, game->window_size.x, game->window_size.y, "so_long");
+	game->window = mlx_new_window(game->mlx, game->window_size.x,
+			game->window_size.y, "so_long");
 	if (game->window == NULL)
 	{
 		free(game->window);

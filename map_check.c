@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:17 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 13:33:11 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 20:33:28 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ int	nb_exit(char **map, char *file)
 {
 	int	i;
 	int	j;
-	int line_count;
+	int	line_count;
 	int	count_exit;
 
 	count_exit = 0;
-	line_count=count_lines_map(file);
+	line_count = count_lines_map(file);
 	i = 0;
-	while(i < line_count)
+	while (i < line_count)
 	{
 		j = 0;
-		while(map[i][j] != '\0')
+		while (map[i][j] != '\0')
 		{
-			if(map[i][j] == 'E')
+			if (map[i][j] == 'E')
 				count_exit++;
 			j++;
 		}
@@ -39,24 +39,25 @@ int	nb_exit(char **map, char *file)
 	return (count_exit);
 }
 
-/*In this function, I will count the number of players that there is in the map.*/
+/*In this function, I will count the number of players that there is in 
+the map.*/
 
 int	nb_player(char **map, char *file)
 {
 	int	i;
 	int	j;
-	int line_count;
+	int	line_count;
 	int	count_player;
 
 	count_player = 0;
-	line_count=count_lines_map(file);
+	line_count = count_lines_map(file);
 	i = 0;
-	while(i < line_count)
+	while (i < line_count)
 	{
 		j = 0;
-		while(map[i][j] != '\0')
+		while (map[i][j] != '\0')
 		{
-			if(map[i][j] == 'P')
+			if (map[i][j] == 'P')
 				count_player++;
 			j++;
 		}
@@ -65,24 +66,24 @@ int	nb_player(char **map, char *file)
 	return (count_player);
 }
 
-/*In this function, I will count the number of collectibles that there is in the map. verify if there is at least one collectible.*/
-
+/*In this function, I will count the number of collectibles that 
+there is in the map. verify if there is at least one collectible.*/
 int	nb_collectible(char **map, char *file)
 {
 	int	i;
 	int	j;
-	int line_count;
+	int	line_count;
 	int	count_collectible;
 
 	count_collectible = 0;
-	line_count=count_lines_map(file);
+	line_count = count_lines_map(file);
 	i = 0;
-	while(i < line_count)
+	while (i < line_count)
 	{
 		j = 0;
-		while(map[i][j] != '\0')
+		while (map[i][j] != '\0')
 		{
-			if(map[i][j] == 'C')
+			if (map[i][j] == 'C')
 				count_collectible++;
 			j++;
 		}
@@ -91,23 +92,22 @@ int	nb_collectible(char **map, char *file)
 	return (count_collectible);
 }
 
-
 /*In this function, I will verify 
 if there are only the following character in the array: P, C, E, 1, 0.*/
-
 int	valid_char(t_mapdata mapdata)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while(i < mapdata.size.y)
+	while (i < mapdata.size.y)
 	{
 		j = 0;
-		while(mapdata.map[i][j] != '\0')
+		while (mapdata.map[i][j] != '\0')
 		{
-			if(mapdata.map[i][j] != 'C' && mapdata.map[i][j] != 'P' && mapdata.map[i][j] != 'E' &&
-				mapdata.map[i][j] != '1' && mapdata.map[i][j] != '0')
+			if (mapdata.map[i][j] != 'C' && mapdata.map[i][j] != 'P' &&
+				mapdata.map[i][j] != 'E' && mapdata.map[i][j] != '1' &&
+				mapdata.map[i][j] != '0')
 			{
 				matrix_delete(mapdata.map);
 				handle_errors("There is an invalid character.");
@@ -125,21 +125,21 @@ Furthermore, if there is ate least one collectible.*/
 
 int	valid_components(t_mapdata mapdata)
 {
-	if(!valid_char(mapdata))
+	if (!valid_char(mapdata))
 		return (0);
-	if(mapdata.player != 1)
+	if (mapdata.player != 1)
 	{
 		matrix_delete(mapdata.map);
 		handle_errors("There must be one 'P'.");
 		return (0);
 	}
-	if(mapdata.collect == 0)
+	if (mapdata.collect == 0)
 	{
 		matrix_delete(mapdata.map);
 		handle_errors("There must be at least one 'C'.");
 		return (0);
 	}
-	if(mapdata.exit != 1)
+	if (mapdata.exit != 1)
 	{
 		matrix_delete(mapdata.map);
 		handle_errors("There must be one 'E'.");

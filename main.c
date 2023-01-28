@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 13:56:35 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:08:12 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 int	valid_map(char *file, t_mapdata mapdata)
 {
 	if (!valid_components(mapdata))
-		return(0);
-	if(!map_surrounded_by_walls(mapdata))
+		return (0);
+	if (!map_surrounded_by_walls(mapdata))
 	{
 		matrix_delete((mapdata).map);
 		return (0);
 	}
-	if(!line_length_equal(mapdata, file))
+	if (!line_length_equal(mapdata, file))
 	{
 		matrix_delete((mapdata).map);
 		return (0);
 	}
-	if(!has_valid_path(&mapdata))
+	if (!has_valid_path(&mapdata))
 	{
 		matrix_delete((mapdata).map);
 		return (0);
@@ -37,31 +37,53 @@ int	valid_map(char *file, t_mapdata mapdata)
 	return (1);
 }
 
-/*In the main, I will call the funtion I will call the funtion valid map in order to check if the map is valid. 
-Then, I will call the funtion game_start_map in order to fill the struct game.
-To initiate a loop, we call the mlx_loop function with the mlx instance as only parameter,
-Now for each frame it requires, it will call the function update with the parameter YourStruct. */
+void	init_player(t_mapdata *mapdata)
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
+	while (mapdata->map[i])
+	{
+		while (mapdata->map[i][j])
+		{
+			if (mapdata->map[i][j] == PLAYER)
+			{
+				mapdata->player_position.x = j;
+				mapdata->player_position.y = i;
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
+/*In the main, I will call the funtion I will call the funtion valid map 
+in order to check if the map is valid. 
+Then, I will call the funtion game_start_map in order to fill the struct game.
+To initiate a loop, we call the mlx_loop function with the mlx instance as only 
+parameter.Now for each frame it requires, it will call the function update with 
+the parameter YourStruct. */
 int	main(int argc, char **argv)
 {
 	t_game		game;
 	t_mapdata	mapdata;
 
 	if (!valid_file(argc, argv[1]))
-		return(0);
+		return (0);
 	mapdata = map(argv[1]);
-	if(!valid_map(argv[1], mapdata))
+	if (!valid_map(argv[1], mapdata))
 		return (0);
 	game = game_init(&mapdata);
-	if(!init_window(&game))
+	if (!init_window(&game))
 		return (0);
 	init_images(&game);
 	render(&game);
 	loop_images(game);
 	destroy_images(&game);
-	if(game.map.map)
+	if (game.map.map)
 		matrix_delete(game.map.map);
 	return (0);
 }
-
-/*mlx_key_hook will call a function whenever we press a Keycode.*/

@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 13:22:21 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 20:28:35 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 int	count_lines_map(char *file)
 {
-	int		fd;
-	int		readcount;
+	int			fd;
+	int			readcount;
 	t_point		size;
-	char	c;
+	char		c;
 
 	size.y = 1;
 	fd = open(file, O_RDONLY);
@@ -48,7 +48,7 @@ int	count_column_map(t_mapdata mapdata)
 
 	size.y = 0;
 	size.x = 0;
-	while(mapdata.map[size.y][size.x] != '\0')
+	while (mapdata.map[size.y][size.x] != '\0')
 	{
 		size.x++;
 	}
@@ -60,72 +60,48 @@ I use the funtion count_lines_map in order to allocate memory.*/
 
 char	**allocate_memory_to_map(char *file)
 {
-	t_mapdata mapdata;
+	t_mapdata	mapdata;
 	t_point		size;
 
 	size.y = count_lines_map(file);
 	if (size.y <= 0)
 	{
 		handle_errors("Open or reading the map file. The file may not exist.");
-		return(NULL);
+		return (NULL);
 	}
 	mapdata.map = malloc(sizeof(char *) * (size.y + 1));
 	if (!mapdata.map)
 	{
 		handle_errors("On allocate memory on **map");
-		return(NULL);
+		return (NULL);
 	}
-	return(mapdata.map);
+	return (mapdata.map);
 }
 
-/*This function will use the function allocate_memory_to_map in order to allocate memory to the array **map with memory.
-Then, I will use the function get next line in order to save each line in the map array*/
+/*This function will use the function allocate_memory_to_map in order to 
+allocate memory to the array **map with memory.
+Then, I will use the function get next line in order to save each line 
+in the map array*/
 
 char	**read_map(char *file)
 {
-	t_mapdata mapdata;
-	int		fd;
-	int		i;
+	t_mapdata	mapdata;
+	int			fd;
+	int			i;
 	t_point		size;
 
 	i = 0;
 	mapdata.map = allocate_memory_to_map(file);
 	size.y = count_lines_map(file);
-	/*if (!mapdata.map)
-		return (NULL);*/
 	fd = open(file, O_RDONLY);
-	while(i < size.y)
+	while (i < size.y)
 	{
 		mapdata.map[i] = ft_strtrim(get_next_line(fd), "\n");
-		//printf("%s\n", mapdata.map[i]);
 		i++;
 	}
 	mapdata.map[i] = 0;
 	close(fd);
-	return(mapdata.map);	
-}
-
-void	init_player(t_mapdata *mapdata)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (mapdata->map[i])
-	{
-		while (mapdata->map[i][j])
-		{
-			if (mapdata->map[i][j] == PLAYER)
-			{
-				mapdata->player_position.x = j;
-				mapdata->player_position.y = i;
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
+	return (mapdata.map);
 }
 
 t_mapdata	map(char *file)
@@ -136,7 +112,7 @@ t_mapdata	map(char *file)
 	mapdata.size.y = count_lines_map(file);
 	mapdata.size.x = count_column_map(mapdata);
 	mapdata.exit = nb_exit(mapdata.map, file);
-	mapdata.player = nb_player(mapdata.map, file) ;
+	mapdata.player = nb_player(mapdata.map, file);
 	mapdata.collect = nb_collectible(mapdata.map, file);
 	mapdata.can_exit = 0;
 	mapdata.player_position.x = 0;
