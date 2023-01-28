@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 21:17:34 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:46:37 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	check_next_positions(t_game *game, char move, char character_next_position)
 	int	y;
 	int	x;
 
-	y = game->map.player_position.y;
-	x = game->map.player_position.x;
+	y = game->map.pp.y;
+	x = game->map.pp.x;
 	if ((move == 'w' && game->map.map[y - 1][x] == character_next_position)
 		|| (move == 's' && game->map.map[y + 1][x] == character_next_position)
 		|| (move == 'a' && game->map.map[y][x - 1] == character_next_position)
@@ -34,8 +34,8 @@ void	count_collectables_catches(t_game *game, char move)
 	int	y;
 	int	x;
 
-	y = game->map.player_position.y;
-	x = game->map.player_position.x;
+	y = game->map.pp.y;
+	x = game->map.pp.x;
 	if ((move == 'w' && game->map.map[y - 1][x] == COLLECTABLE)
 		|| (move == 's' && game->map.map[y + 1][x] == COLLECTABLE)
 		|| (move == 'a' && game->map.map[y][x - 1] == COLLECTABLE)
@@ -79,16 +79,17 @@ void	move_player(t_game *game, char move)
 	count_collectables_catches(game, move);
 	if (game->collect == game->map.collect)
 		game->map.can_exit = 1;
-	game->map.map[game->map.player_position.y][game->map.player_position.x] = EMPTY;
+	game->map.map[game->map.pp.y][game->map.pp.x] = EMPTY;
 	if (move == 'd')
-		game->map.player_position.x++;
+		game->map.pp.x++;
 	else if (move == 'a')
-		game->map.player_position.x--;
+		game->map.pp.x--;
 	else if (move == 's')
-		game->map.player_position.y++;
+		game->map.pp.y++;
 	else if (move == 'w')
-		game->map.player_position.y--;
-	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.y][game->map.player_position.x] == EXIT)
+		game->map.pp.y--;
+	if (game->map.can_exit == 1
+		&& game->map.map[game->map.pp.y][game->map.pp.x] == EXIT)
 		win_game(game);
-	game->map.map[game->map.player_position.y][game->map.player_position.x] = PLAYER;
+	game->map.map[game->map.pp.y][game->map.pp.x] = PLAYER;
 }

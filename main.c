@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 18:23:22 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 21:08:12 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:45:02 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	init_player(t_mapdata *mapdata)
 		{
 			if (mapdata->map[i][j] == PLAYER)
 			{
-				mapdata->player_position.x = j;
-				mapdata->player_position.y = i;
+				mapdata->pp.x = j;
+				mapdata->pp.y = i;
 			}
 			j++;
 		}

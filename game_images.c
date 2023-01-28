@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:58:58 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 20:48:22 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:35:58 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	loop_images(t_game game)
 	mlx_hook(game.window, KeyPress, KeyPressMask, &handle_keypress, &game);
 	mlx_hook(game.window, ClientMessage, LeaveWindowMask,
 		&handle_btnrealease, &game);
+	mlx_hook(game.window, 17, (1L << 0), ft_exit, &game);
 	mlx_loop(game.mlx);
 }
 

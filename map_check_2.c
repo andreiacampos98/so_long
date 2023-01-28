@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 21:09:31 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/28 20:46:07 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 22:45:20 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ bool	has_valid_path(t_mapdata *mapdata)
 		}
 		i++;
 	}
-	is_valid = flood_fill(mapdata, mapdata->player_position, dup);
+	is_valid = flood_fill(mapdata, mapdata->pp, dup);
 	matrix_delete(dup);
 	return (is_valid);
 }
