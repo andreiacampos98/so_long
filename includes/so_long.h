@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 20:37:41 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/25 18:33:40 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 11:27:04 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-# define IMG_SIZE 48
-# define A 97
-# define D 100
-# define S 115
-# define W 119
+# define IMG_SIZE 32
+# define a 97
+# define d 100
+# define s 115
+# define w 119
+
 typedef struct s_point
 {
 	int	x;
@@ -83,7 +84,6 @@ char		**read_map(char *file);
 t_mapdata	map(char *file);
 
 /*--------------Checker Map-----------------*/
-
 int		nb_exit(char **map, char *file);
 int		nb_player(char **map, char *file);
 int		nb_collectible(char **map, char *file);
@@ -98,25 +98,29 @@ int		valid_file(int argc, char *file);
 int		valid_map(char *file, t_mapdata mapdata);
 
 /*-------------------- Game Init --------------------*/
+t_game	game_init(t_mapdata *map);
+int		init_window(t_game *game);
 
-int		game_start(t_game *game);
+/*------------------- Game Images -------------------*/
 void	init_images(t_game *game);
-void	parse_chars(t_game *game, int width, int i, int j);
+void	parse_chars(t_game *game, int i, int j);
 int		render(t_game *game);
 void	loop_images(t_game *game);
+void	destroy_images(t_game *game);
 
+/*-------------------- Game Handler --------------------*/
 int		handle_btnrealease(t_game *game);
 int		handle_keypress(int keysym, t_game *game);
 
+/*-------------------- Game Move --------------------*/
 int		check_next_positions(t_game *game, char move, char character_next_position);
 void	count_collectables_catches(t_game *game, char move);
 int		win_game(t_game *game);
-
 void	move_player(t_game *game, char move);
-void	destroy_images(t_game *game);
 
 /*-------------------- Utils --------------------*/
-
 void	matrix_delete(char **str);
+
+int	handle_resize(t_game *game);
 
 #endif

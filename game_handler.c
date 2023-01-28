@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:29:36 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/26 22:33:03 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 11:50:04 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int		handle_keypress(int keysym, t_game *game)
 	if (keysym == XK_Escape)
 	{
 		ft_printf("entrou BURRA");
-		mlx_destroy_window(game->mlx, game->window);
-		game->window = NULL;
+		matrix_delete(game->map.map);
+		destroy_images(game);
+		//mlx_destroy_window(game->mlx, game->window);
+		//game->window = NULL;
 	}
-	else if (keysym == 'A' || keysym == 'S' || keysym == 'W' ||keysym == 'D')
+	else if (keysym == 'a' || keysym == 's' || keysym == 'w' ||keysym == 'd')
 	{
-		ft_printf("entrou");
+		ft_printf("entrou\n");
 		move_player(game, keysym);
 	}
 	return (0);
@@ -36,7 +38,8 @@ and we need to close the window.*/
 int		handle_btnrealease(t_game *game)
 {
 	//printf("Keyrelease: %d\n", keysym);
-	mlx_destroy_window(game->mlx, game->window);
-	game->window = NULL;
+	destroy_images(game);
+	//mlx_destroy_window(game->mlx, game->window);
+	//game->window = NULL;
 	return (0);
 }

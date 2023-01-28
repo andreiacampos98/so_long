@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/25 21:56:04 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 10:41:49 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	init_player(t_mapdata *mapdata)
 	{
 		while (mapdata->map[i][j])
 		{
-			if (mapdata->map[i][j] == 'P')
+			if (mapdata->map[i][j] == PLAYER)
 			{
 				mapdata->player_position.x = j;
 				mapdata->player_position.y = i;
@@ -135,8 +135,8 @@ t_mapdata	map(char *file)
 	mapdata.map = read_map(file);
 	mapdata.size.y = count_lines_map(file);
 	mapdata.size.x = count_column_map(mapdata);
-	mapdata.player = nb_exit(mapdata.map, file);
-	mapdata.exit =	nb_player(mapdata.map, file) ;
+	mapdata.exit = nb_exit(mapdata.map, file);
+	mapdata.player = nb_player(mapdata.map, file) ;
 	mapdata.collect = nb_collectible(mapdata.map, file);
 	mapdata.can_exit = 0;
 	mapdata.player_position.x = 0;

@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:34:03 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/26 22:25:40 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/28 11:12:16 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*This function it will check if the next position is a wall*/
 int	check_next_positions(t_game *game, char move, char character_next_position)
 {
-	if((move == 'W' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == character_next_position)
-		|| (move == 'S' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == character_next_position)
-		|| (move == 'A' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == character_next_position)
-		|| (move == 'D' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == character_next_position))
+	if((move == 'w' && game->map.map[game->map.player_position.y - 1][game->map.player_position.x] == character_next_position)
+		|| (move == 's' && game->map.map[game->map.player_position.y + 1][game->map.player_position.x] == character_next_position)
+		|| (move == 'a' && game->map.map[game->map.player_position.y][game->map.player_position.x - 1] == character_next_position)
+		|| (move == 'd' && game->map.map[game->map.player_position.y][game->map.player_position.x+ 1] == character_next_position))
 		return (1);
 	return (0);		
 }
@@ -26,10 +26,10 @@ int	check_next_positions(t_game *game, char move, char character_next_position)
 /*This function it will count the collectables that already catch.*/
 void	count_collectables_catches(t_game *game, char move)
 {
-	if((move == 'W' && game->map.map[game->map.player_position.x][game->map.player_position.y + 1] == COLLECTABLE)
-		|| (move == 'S' && game->map.map[game->map.player_position.x][game->map.player_position.y - 1] == COLLECTABLE)
-		|| (move == 'A' && game->map.map[game->map.player_position.x - 1][game->map.player_position.y] == COLLECTABLE)
-		|| (move == 'D' && game->map.map[game->map.player_position.x + 1][game->map.player_position.y] == COLLECTABLE))
+	if((move == 'w' && game->map.map[game->map.player_position.y - 1][game->map.player_position.x] == COLLECTABLE)
+		|| (move == 's' && game->map.map[game->map.player_position.y + 1][game->map.player_position.x] == COLLECTABLE)
+		|| (move == 'a' && game->map.map[game->map.player_position.y][game->map.player_position.x - 1] == COLLECTABLE)
+		|| (move == 'd' && game->map.map[game->map.player_position.y][game->map.player_position.x+ 1] == COLLECTABLE))
 		game->collect++;
 }
 
@@ -58,46 +58,59 @@ we will change the value of can_exit for 1.*/
 /*Then we will put the player in that position.*/
 void	move_player(t_game *game, char move)
 {
+	int j = 0;
 	if(check_next_positions(game, move, WALL) == 1 || 
 		(check_next_positions(game, move, EXIT) == 1 && game->map.can_exit == 0))
 		return ;
 	game->moves++;
-	ft_printf("%d", game->moves); //delete at the end
+	ft_printf("Moves: %d\n", game->moves); //delete at the end
 	count_collectables_catches(game, move);
+	ft_printf("Count coins catches: %d\n", game->collect); //delete at the end
+	ft_printf("Count coins: %d\n", game->map.collect); //delete at the end
 	if(game->collect == game->map.collect)
 		game->map.can_exit = 1;
-	game->map.map[game->map.player_position.x][game->map.player_position.y] = WALL;
-	if (move == 'D')
+	ft_printf("x: %d   Y: %d\n", game->map.player_position.x, game->map.player_position.y);
+	ft_printf("Character: %c\n", game->map.map[game->map.player_position.y][game->map.player_position.x]);
+	while(j < game->map.size.y)
+	{
+		ft_printf("%s\n", game->map.map[j]);
+		j++;
+	}
+	game->map.map[game->map.player_position.y][game->map.player_position.x] = EMPTY;
+	ft_printf("Character: %c\n", game->map.map[game->map.player_position.y][game->map.player_position.x]);
+	if (move == 'd')
 	{
 		game->map.player_position.x++;
-		printf("x: %d   Y: %d", game->map.player_position.x, game->map.player_position.y);
+		printf("x: %d   Y: %d\n", game->map.player_position.y, game->map.player_position.x);
 	}	
-	else if (move == 'A')
+	else if (move == 'a')
 	{
 		game->map.player_position.x--;
 		
 	}
-	else if (move == 'S')
-	{
-		game->map.player_position.y--;
-		
-	}	
-	else if (move == 'W')
+	else if (move == 's')
 	{
 		game->map.player_position.y++;
 		
+	}	
+	else if (move == 'w')
+	{
+		game->map.player_position.y--;
+		
 	}
-	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.x][game->map.player_position.y] == EXIT)
+	if (game->map.can_exit == 1 && game->map.map[game->map.player_position.y][game->map.player_position.x] == EXIT)
 		win_game(game);
-	game->map.map[game->map.player_position.x][game->map.player_position.y] = PLAYER;
+	game->map.map[game->map.player_position.y][game->map.player_position.x] = PLAYER;
+	j = 0;
+	while(j < game->map.size.y)
+	{
+		ft_printf("%s\n", game->map.map[j]);
+		j++;
+	}
 }
 
-void	destroy_images(t_game *game)
+/*int	handle_resize(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->img.wall);
-	mlx_destroy_image(game->mlx, game->img.ground);
-	mlx_destroy_image(game->mlx, game->img.player);
-	mlx_destroy_image(game->mlx, game->img.exit);
-	mlx_destroy_image(game->mlx, game->img.coin);
-	mlx_destroy_display(game->mlx);
-}
+	render(game);
+	return (0);
+}*/
