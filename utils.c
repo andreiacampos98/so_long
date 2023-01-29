@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:56:32 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/29 12:47:05 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/29 13:56:23 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	ft_exit(t_game *game)
 	free(game->map.map);
 	mlx_destroy_window(game->mlx, game->window);
 	destroy_images(game);
-	free(game->mlx);
 	exit(1);
 	return (0);
 }

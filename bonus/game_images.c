@@ -6,7 +6,7 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:58:58 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/29 10:34:20 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:00:26 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	destroy_images(t_game *game)
 	mlx_destroy_image(game->mlx, game->img.exit);
 	mlx_destroy_image(game->mlx, game->img.coin);
 	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 }
