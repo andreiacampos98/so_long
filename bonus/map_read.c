@@ -6,12 +6,11 @@
 /*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:18:15 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/29 12:45:01 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/29 12:50:47 by anaraujo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx-linux/mlx.h"
-#include "includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 /*Function to count the number of lines in the map file*/
 

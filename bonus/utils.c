@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils->c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaraujo <anaraujo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anaraujo <anaraujo@student->42->fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:56:32 by anaraujo          #+#    #+#             */
-/*   Updated: 2023/01/29 12:47:05 by anaraujo         ###   ########.fr       */
+/*   Updated: 2023/01/29 12:09:13 by anaraujo         ###   ########->fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx-linux/mlx.h"
-#include "includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 void	matrix_delete(char **str)
 {
